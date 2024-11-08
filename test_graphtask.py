@@ -48,10 +48,10 @@ def test_generate_random_data_large_values():
 
 def test_generate_random_data_invalid_values():
     """Test that invalid values for num_records raise exceptions."""
-    with pytest.raises(ValueError, match="num_records cannot be less than 2."):
+    with pytest.raises(ValueError, match="num_records must be between 2 and 200"):
         generate_random_data(num_records=1)
 
-    with pytest.raises(ValueError, match="num_records cannot be greater than 200."):
+    with pytest.raises(ValueError, match="num_records must be between 2 and 200"):
         generate_random_data(num_records=201)
 
 
@@ -77,9 +77,9 @@ def test_main_graph_structure():
 
 # Tests for input arguments and validation
 @pytest.mark.parametrize("num_records, expected_exception, expected_message", [
-    (1, ValueError, "num_records cannot be less than 2."),
-    (201, ValueError, "num_records cannot be greater than 200."),
-    (-10, ValueError, "num_records cannot be less than 2."),
+    (1, ValueError, "num_records must be between 2 and 200"),
+    (201, ValueError, "num_records must be between 2 and 200"),
+    (-10, ValueError, "num_records must be between 2 and 200"),
 ])
 def test_num_records_boundary(num_records, expected_exception, expected_message):
     """Test boundaries and validation of num_records argument."""
