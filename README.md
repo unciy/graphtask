@@ -12,36 +12,48 @@ cd graphtask
 ````
 # Create a virtual environment:
 
-```python3 -m venv .venv```
+````
+python3 -m venv .venv
+````
 
 
 Activate the virtual environment:
 
 Linux/macOS:
-```source .venv/bin/activate```
+````
+source .venv/bin/activate
+````
 
 Windows:
-```.venv\Scripts\activate```
+````
+.venv\Scripts\activate
+````
 
 ## Install the required packages:
 
 With the virtual environment active, install the dependencies:
 
-```pip install -r requirements.txt```
+````
+pip install -r requirements.txt
+````
 
 # Usage
 
 ## Basic usage
 For the simplest script execution with default parameters, run:
 
-````python main.py````
+````
+python main.py
+````
 
 This will generate a graph with the default settings (100 nodes, 80% of nodes with multiple connections, and displays the graph without saving).
 
 ## Other example
 Generate and display a graph with 100 nodes, where 80% of nodes have multiple connections, and save the graph to a file:
 
-````python main.py --num_records 100 --multi_connection_ratio 0.8 --min_connections 2 --max_connections 3 --edge_thickness 1.5 --fig_size 10 --save_to_file````
+````
+python main.py --num_records 100 --multi_connection_ratio 0.8 --min_connections 2 --max_connections 3 --edge_thickness 1.5 --fig_size 10 --save_to_file
+````
 
 
 # Argument Explanation:
@@ -68,11 +80,15 @@ pytest test_graphtask.py -vv
 
 # pylint
 
-````pylint ./graphtask.py ./test_graphtask.py````
+````
+pylint ./graphtask.py ./test_graphtask.py
+````
 
 # mypy
 
-````mypy ./````
+````
+mypy ./
+````
 
 # License
 This project is licensed under the MIT License. See the LICENSE file for more details.
