@@ -1,13 +1,20 @@
+"""
+This project generates a directed graph with specific properties,
+allowing you to visualize the connections between nodes and control the graph parameters
+through command-line arguments. The project also includes tests
+to ensure functionality and correctness. This project requires Python3.
+"""
+
 import random
 from datetime import datetime
 import argparse
 from math import sqrt
+from typing import Dict, List
 import textwrap
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib import colors as mcolors
 from matplotlib import gridspec
-from typing import Dict, List
 
 
 def generate_random_data(
@@ -63,6 +70,9 @@ def main(
     fig_size: int,
     save_to_file: bool
 ) -> None:
+    # pylint: disable=R0913
+    # pylint: disable=R0917
+    # pylint: disable=R0914
     """
     Generate nodes and draw the graph.
     """
@@ -76,7 +86,7 @@ def main(
     ax_text.axis("off")
 
     # Create graph
-    digraph = nx.DiGraph()
+    digraph: nx.DiGraph = nx.DiGraph()
     for key, values in data.items():
         for value in values:
             digraph.add_edge(key, value)
