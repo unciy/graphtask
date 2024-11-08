@@ -1,10 +1,3 @@
-"""
-This project generates a directed graph with specific properties,
-allowing you to visualize the connections between nodes and control the graph parameters
-through command-line arguments. The project also includes tests
-to ensure functionality and correctness. This project requires Python3.
-"""
-
 import random
 from datetime import datetime
 import argparse
@@ -14,10 +7,15 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib import colors as mcolors
 from matplotlib import gridspec
+from typing import Dict, List
 
 
-def generate_random_data(num_records=100, multi_connection_ratio=0.8, min_connections=2,
-                         max_connections=3):
+def generate_random_data(
+    num_records: int = 100,
+    multi_connection_ratio: float = 0.8,
+    min_connections: int = 2,
+    max_connections: int = 3
+) -> Dict[int, List[int]]:
     """
     Generate random graph data
     """
@@ -30,7 +28,7 @@ def generate_random_data(num_records=100, multi_connection_ratio=0.8, min_connec
 
     # Create a list of unique nodes
     nodes = random.sample(range(num_records), num_records)
-    connections = {}
+    connections: Dict[int, List[int]] = {}
 
     # Calculate the number of nodes that should have multiple connections
     multi_connection_nodes_count = int(num_records * multi_connection_ratio)
@@ -56,13 +54,17 @@ def generate_random_data(num_records=100, multi_connection_ratio=0.8, min_connec
     return connections
 
 
-def main(num_records, multi_connection_ratio, min_connections, max_connections, edge_thickness,
-         fig_size, save_to_file):
-    # pylint: disable=R0913
-    # pylint: disable=R0917
-    # pylint: disable=R0914
+def main(
+    num_records: int,
+    multi_connection_ratio: float,
+    min_connections: int,
+    max_connections: int,
+    edge_thickness: float,
+    fig_size: int,
+    save_to_file: bool
+) -> None:
     """
-    Generate nodes and draw
+    Generate nodes and draw the graph.
     """
     data = generate_random_data(num_records, multi_connection_ratio,
                                 min_connections, max_connections)
