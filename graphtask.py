@@ -1,22 +1,30 @@
+"""
+This project generates a directed graph with specific properties,
+allowing you to visualize the connections between nodes and control the graph parameters
+through command-line arguments. The project also includes tests
+to ensure functionality and correctness. This project requires Python3.
+"""
+
 import random
 from datetime import datetime
-import networkx as nx
-import matplotlib.pyplot as plt
-from matplotlib import colors as mcolors
 import argparse
 from math import sqrt
 import textwrap
-import matplotlib.gridspec as gridspec
+import networkx as nx
+import matplotlib.pyplot as plt
+from matplotlib import colors as mcolors
+from matplotlib import gridspec
 
 
-# Generate random graph data
-def generate_random_data(num_records=100, multi_connection_ratio=0.8, min_connections=2, max_connections=3):
+def generate_random_data(num_records=100, multi_connection_ratio=0.8, min_connections=2,
+                         max_connections=3):
+    """
+    Generate random graph data
+    """
     # Validate the number of nodes
-    if num_records < 2:
-        raise ValueError("num_records cannot be less than 2.")
-    elif num_records > 200:
-        raise ValueError("num_records cannot be greater than 200.")
-    elif num_records == 2:
+    if num_records < 2 or num_records > 200:
+        raise ValueError("num_records must be between 2 and 200")
+    if num_records == 2:
         print("Only two nodes; creating single connection.")
         return {0: [1], 1: [0]}
 
@@ -40,15 +48,24 @@ def generate_random_data(num_records=100, multi_connection_ratio=0.8, min_connec
     # Create multiple connections for nodes with multiple connections
     for node in multi_connection_nodes:
         # Ensure the number of connections is within specified min and max
-        num_connections = max(min(random.randint(min_connections, max_connections), len(nodes) - 1), 2)
+        num_connections = max(min(random.randint(min_connections, max_connections),
+                                  len(nodes) - 1), 2)
         targets = random.sample([n for n in nodes if n != node], num_connections)
         connections[node] = targets
 
     return connections
 
 
-def main(num_records, multi_connection_ratio, min_connections, max_connections, edge_thickness, fig_size, save_to_file):
-    data = generate_random_data(num_records, multi_connection_ratio, min_connections, max_connections)
+def main(num_records, multi_connection_ratio, min_connections, max_connections, edge_thickness,
+         fig_size, save_to_file):
+    # pylint: disable=R0913
+    # pylint: disable=R0917
+    # pylint: disable=R0914
+    """
+    Generate nodes and draw
+    """
+    data = generate_random_data(num_records, multi_connection_ratio,
+                                min_connections, max_connections)
 
     fig = plt.figure(figsize=(fig_size, fig_size))
     gs = gridspec.GridSpec(2, 1, height_ratios=[4, 1])
@@ -57,26 +74,27 @@ def main(num_records, multi_connection_ratio, min_connections, max_connections, 
     ax_text.axis("off")
 
     # Create graph
-    G = nx.DiGraph()
+    digraph = nx.DiGraph()
     for key, values in data.items():
         for value in values:
-            G.add_edge(key, value)
+            digraph.add_edge(key, value)
 
     # Position nodes
-    if len(G.nodes) < 5:
-        pos = {i: (i * 0.5, 0) for i in G.nodes}
+    if len(digraph.nodes) < 5:
+        pos = {i: (i * 0.5, 0) for i in digraph.nodes}
     else:
-        k = 1 / sqrt(len(G.nodes))
-        pos = nx.spring_layout(G, k=k, iterations=100)
+        k = 1 / sqrt(len(digraph.nodes))
+        pos = nx.spring_layout(digraph, k=k, iterations=100)
 
     # Draw nodes and edges
     all_colors = list(mcolors.CSS4_COLORS.keys())
-    nx.draw_networkx_nodes(G, pos, ax=ax_graph, node_size=300, node_color="lightblue", edgecolors="black",
-                           linewidths=edge_thickness)
-    for edge in G.edges():
+    nx.draw_networkx_nodes(digraph, pos, ax=ax_graph, node_size=300, node_color="lightblue",
+                           edgecolors="black", linewidths=edge_thickness)
+    for edge in digraph.edges():
         color = random.choice(all_colors)
-        nx.draw_networkx_edges(G, pos, ax=ax_graph, edgelist=[edge], edge_color=color, arrows=True)
-    nx.draw_networkx_labels(G, pos, ax=ax_graph, font_size=8, font_weight="bold")
+        nx.draw_networkx_edges(digraph, pos, ax=ax_graph, edgelist=[edge],
+                               edge_color=color, arrows=True)
+    nx.draw_networkx_labels(digraph, pos, ax=ax_graph, font_size=8, font_weight="bold")
 
     ax_graph.set_title("Randomly Generated Graph with Colored Edges and Node Borders")
 
@@ -98,7 +116,8 @@ def main(num_records, multi_connection_ratio, min_connections, max_connections, 
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate and display a random graph with customizable parameters.")
+    parser = argparse.ArgumentParser(description="Generate and display a random "
+                                                 "graph with customizable parameters.")
     parser.add_argument("--num_records", type=int, default=100,
                         help="Number of nodes in the graph (minimum: 2, maximum: 200)")
     parser.add_argument("--multi_connection_ratio", type=float, default=0.8,
@@ -107,8 +126,10 @@ if __name__ == "__main__":
                         help="Minimum number of connections per multi-connection node (default: 2)")
     parser.add_argument("--max_connections", type=int, default=3,
                         help="Maximum number of connections per multi-connection node (default: 3)")
-    parser.add_argument("--edge_thickness", type=float, default=1, help="Thickness of node borders (default: 1)")
-    parser.add_argument("--fig_size", type=int, default=18, help="Size of the figure for the graph (default: 18)")
+    parser.add_argument("--edge_thickness", type=float, default=1,
+                        help="Thickness of node borders (default: 1)")
+    parser.add_argument("--fig_size", type=int, default=18,
+                        help="Size of the figure for the graph (default: 18)")
     parser.add_argument("--save_to_file", action="store_true",
                         help="Save the graph as an image instead of displaying it")
 

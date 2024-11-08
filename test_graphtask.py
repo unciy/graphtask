@@ -1,7 +1,11 @@
-import pytest
+"""
+Main testes
+"""
+
 import os
 from datetime import datetime
 from glob import glob
+import pytest
 from graphtask import generate_random_data, main
 
 
@@ -20,7 +24,8 @@ def test_generate_random_data_structure():
     # Check that each node's connections are unique and do not contain itself
     for node, connections in data.items():
         assert node not in connections, f"Node {node} should not connect to itself"
-        assert len(connections) == len(set(connections)), f"Connections of node {node} should be unique"
+        assert len(connections) == len(set(connections)), \
+            f"Connections of node {node} should be unique"
 
 
 def test_generate_random_data_small_values():
@@ -62,7 +67,8 @@ def test_main_graph_structure():
     matching_files = glob(f"generated_graph_{timestamp}*.png")
 
     # Assert that at least one file matching the pattern exists
-    assert len(matching_files) > 0, "Expected a file with a timestamped filename, but none was found."
+    assert len(matching_files) > 0, \
+        "Expected a file with a timestamped filename, but none was found."
 
     # Clean up created files
     for file in matching_files:
@@ -97,7 +103,9 @@ def test_random_data_properties(multi_connection_ratio, min_connections, max_con
     # Check that multi_connection_ratio is exactly 80%
     multi_connection_nodes = sum(1 for connections in data.values() if len(connections) > 1)
     assert multi_connection_nodes == int(
-        100 * multi_connection_ratio), f"Graph should have exactly {multi_connection_ratio * 100}% nodes with multiple connections"
+        100 * multi_connection_ratio), (f"Graph should have exactly "
+                                        f"{multi_connection_ratio * 100}% "
+                                        f"nodes with multiple connections")
 
 
 @pytest.mark.parametrize("fig_size, edge_thickness", [
@@ -116,7 +124,8 @@ def test_visual_parameters(fig_size, edge_thickness):
     matching_files = glob(f"generated_graph_{timestamp}*.png")
 
     # Assert that at least one file matching the pattern exists
-    assert len(matching_files) > 0, "Expected a file with a timestamped filename, but none was found."
+    assert len(matching_files) > 0, \
+        "Expected a file with a timestamped filename, but none was found."
 
     # Clean up created files
     for file in matching_files:
