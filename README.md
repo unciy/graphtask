@@ -43,7 +43,7 @@ pip install -r requirements.txt
 For the simplest script execution with default parameters, run:
 
 ````
-python main.py
+python graphtask.py
 ````
 
 This will generate a graph with the default settings (100 nodes, 80% of nodes with multiple connections, and displays the graph without saving).
@@ -52,7 +52,7 @@ This will generate a graph with the default settings (100 nodes, 80% of nodes wi
 Generate and display a graph with 100 nodes, where 80% of nodes have multiple connections, and save the graph to a file:
 
 ````
-python main.py --num_records 100 --multi_connection_ratio 0.8 --min_connections 2 --max_connections 3 --edge_thickness 1.5 --fig_size 10 --save_to_file
+python graphtask.py --num_records 100 --multi_connection_ratio 0.8 --min_connections 2 --max_connections 3 --edge_thickness 1.5 --fig_size 10 --save_to_file
 ````
 
 
@@ -60,7 +60,7 @@ python main.py --num_records 100 --multi_connection_ratio 0.8 --min_connections 
 The project generates a graph and displays or saves it based on parameters passed through the command line. Here’s how to run the project:
 
 ````
-python main.py --num_records <number_of_nodes> --multi_connection_ratio <ratio_of_multi_connections> --min_connections <min_connections_per_node> --max_connections <max_connections_per_node> --edge_thickness <thickness_of_edges> --fig_size <size_of_figure> --save_to_file
+python graphtask.py --num_records <number_of_nodes> --multi_connection_ratio <ratio_of_multi_connections> --min_connections <min_connections_per_node> --max_connections <max_connections_per_node> --edge_thickness <thickness_of_edges> --fig_size <size_of_figure> --save_to_file
 
 --num_records: Number of nodes in the graph (must be between 2 and 200).
 --multi_connection_ratio: Ratio of nodes with multiple connections (e.g., 0.8 for 80%).
