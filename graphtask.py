@@ -128,8 +128,8 @@ if __name__ == "__main__":
                         help="Maximum number of connections per multi-connection node (default: 3)")
     parser.add_argument("--edge_thickness", type=float, default=1,
                         help="Thickness of node borders (default: 1)")
-    parser.add_argument("--fig_size", type=int, default=18,
-                        help="Size of the figure for the graph (default: 18)")
+    parser.add_argument("--fig_size", type=int, default=10,
+                        help="Size of the figure for the graph (default: 10)")
     parser.add_argument("--save_to_file", action="store_true",
                         help="Save the graph as an image instead of displaying it")
 
